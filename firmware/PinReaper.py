@@ -24,18 +24,18 @@ def pull_deadpins(filepath="DeadPins.txt"):
 
 
 def identify_deadpins():
-    identified_pins = []
+    identified_deadpins = []
     deadpins_list = pull_deadpins()  # pull in our dead pin list
-    master_list = PinMatcher.match_csv_to_rpt()  # pull our master_list reference
+    master_list = PinMatcher.match_csv_to_rpt()  # pull in our reference
     
     for line in deadpins_list:
         for reference in master_list:
-            if line[:19].strip() == reference[0].strip():
-                print(reference, "is dead")
-                identified_pins.append(reference)
+            if line[:19].strip() == reference[0].strip():  
+              # [:19] for first column, [0] for first column
+                identified_deadpins.append(reference)  # reference is dead 
                 
-    PinMatcher.gen_csv(master_list=identified_pins, csvpath="DeadPins.csv")   
+    PinMatcher.gen_csv(master_list=identified_deadpins, csvpath="DeadPins.csv")   
              
-    return identified_pins
+    return identified_deadpins
 
     
