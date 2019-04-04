@@ -65,15 +65,14 @@ def match_csv_to_rpt():
     
     master_list = []
     for cometlist in all_comet_lists:  # now match pin numbers on one list to the other
-        for line in cometlist:
-            pass
-        pass
+        for line in cometlist:  
+            # look inside the firmware list to find the matching pin
+            for pin_tuple in firmware_list:
+                if line[0][15:] == pin_tuple[1]:
+                    master_list.append(line+pin_tuple)
+                
     
-            
-    
-    
-    
-    return all_comet_lists
+    return master_list
 
 def identify_matches():
     
