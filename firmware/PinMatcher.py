@@ -34,19 +34,49 @@ def pull_csv(filepath="CometDcbFullMapping.csv"):
     
     return csv_list  
 
-
-'''
-
-Keep identifiers A/B and J1/J2 from comet
-
-'''
-
 # method to take report_list and grab pin # and firmware name
 def match_csv_to_rpt():
     
-    report_list = pull_report()
+    firmware_list = pull_report()  # get list of tuples from report
+    cometdcb_list = pull_csv()     # get list of tuples from csv
+
+    '''
+    this nested for loop works to separate CometA and CometB into 4 lists,
+    CometA J1, CometA J2, CometB J1, CometB J2 using string manipulation.
+    i.e. since yipeng's CSV file is uniform, A or B is always located at column 0
+    at index 6, and J1 or J2 is always located at column 0 at index 9.
+    '''
+    
+    A_J1, B_J1, A_J2, B_J2 = [],[],[],[]
+    all_comet_lists = [A_J1, B_J1, A_J2, B_J2]
+    
+    for line in cometdcb_list:   # remember each line is a tuple with 4 columns
+        if line[0][6] == "A":
+            if line[0][9] == "1":
+                A_J1.append(line)
+            else:
+                A_J2.append(line)
+                
+        if line[0][6] == "B":
+            if line[0][9] == "1":
+                B_J1.append(line)
+            else:
+                B_J2.append(line)
+    
+    master_list = []
+    for cometlist in all_comet_lists:  # now match pin numbers on one list to the other
+        for line in cometlist:
+            pass
+        pass
+    
+            
     
     
+    
+    return all_comet_lists
+
+def identify_matches():
     
     pass
     
+
