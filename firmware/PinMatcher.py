@@ -15,17 +15,16 @@ def pull_report(filepath="COMET_20ELKs_Pins.rpt"):
         raw_data = f.readlines()    # create list "raw_data" from report file
     raw_data = raw_data[12:]  # strip out the header
     
-      # manually grab the first and second columns from raw_data and 
+      # manually grab the first and second columns from raw_data  
       # save both columns into a tuple
-    for line in raw_data:  # loop through each line
-        firmware_name = line[:20]  
-        firmware_pin = line[20:24]
+    for line in raw_data:
+        firmware_name = line[:20]    # first column
+        firmware_pin = line[20:24]   # second column
         
         report_list.append((firmware_name.strip(),firmware_pin.strip()))  
             # append new tuple to list, use .strip() to remove whitespace
                         
     return report_list
-
 
 # method to open .csv file and save each row as a tuple
 def pull_csv(filepath="CometDcbFullMapping.csv"):
