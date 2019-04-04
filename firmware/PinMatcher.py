@@ -99,8 +99,7 @@ def match_csv_to_rpt():
                 
     return master_list
 
-def gen_csv(csvpath="MatchedPins.csv"):
-    master_list = match_csv_to_rpt()  # grab our huge list with new values
+def gen_csv(master_list=match_csv_to_rpt(), csvpath="MatchedPins.csv"):
     
     with open(csvpath, 'w', newline='') as f:  # create csv file
         writer = csv.writer(f, quoting=csv.QUOTE_ALL)  # initialize writer
@@ -109,6 +108,7 @@ def gen_csv(csvpath="MatchedPins.csv"):
                 #  column headers
                 
         writer.writerows(master_list)  # write our entire list
+     
     return
     
 
