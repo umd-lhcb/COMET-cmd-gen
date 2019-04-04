@@ -71,11 +71,18 @@ def match_csv_to_rpt():
                 if line[0][15:] == pin_tuple[1]:
                     master_list.append(line+pin_tuple)
                 
-    
     return master_list
 
-def identify_matches():
+def gen_csv(csvpath="MatchedPins.csv"):
     
-    pass
+    master_list = match_csv_to_rpt()
+    
+    with open(csvpath, 'w', newline='') as f:
+        writer = csv.writer(f, quoting=csv.QUOTE_ALL)
+        writer.writerow(["COMET FPGA pin","Pathfinder COMET connector", "DCB data GBTx pin"
+                         ,"Signal ID", "Firmware Name", "Firmware Pin #"])
+        writer.writerows(master_list)
+     
+    return
     
 
