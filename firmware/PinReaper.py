@@ -15,7 +15,7 @@ MatchedPins.csv does.
 import PinMatcher  # import other script we wrote
 import csv
 
-def pull_deadpins(filepath="DeadPins.txt"):
+def pull_deadpins(filepath="resources/DeadPins.txt"):
     
     with open(filepath) as f:  # open .rpt file
         raw_data = f.readlines()    # create list "raw_data" from report file

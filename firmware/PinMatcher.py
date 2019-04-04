@@ -34,7 +34,7 @@ gen_csv() uses the master list from match_csv_to_rpt() and creates a CSV file.
 import csv
 
 # method to open .rpt file and pull relevant lines
-def pull_report(filepath="COMET_20ELKs_Pins.rpt"):
+def pull_report(filepath="resources/COMET_20ELKs_Pins.rpt"):
     report_list = []
     
     with open(filepath) as f:  # open .rpt file
@@ -53,7 +53,7 @@ def pull_report(filepath="COMET_20ELKs_Pins.rpt"):
     return report_list
 
 # method to open .csv file and save each row as a tuple
-def pull_csv(filepath="CometDcbFullMapping.csv"):
+def pull_csv(filepath="resources/CometDcbFullMapping.csv"):
     
     csv_list = [tuple(row) for row in csv.reader(open(filepath, 'r'))]  # list comprehension!
     del csv_list[0]  # strip out header
