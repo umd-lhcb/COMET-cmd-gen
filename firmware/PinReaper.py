@@ -17,9 +17,9 @@ import csv
 
 def pull_deadpins(filepath="resources/DeadPins.txt"):
     
-    with open(filepath) as f:  # open .rpt file
+    with open(filepath) as f:  # open dead pins txt file
         raw_data = f.readlines()    # create list "raw_data" from report file
-
+    
     return raw_data
 
 
@@ -33,7 +33,8 @@ def identify_deadpins():
             if line[:19].strip() == reference[0].strip():  
               # [:19] for first column, [0] for first column
                 identified_deadpins.append(reference)  # reference is dead 
-                
+    
+    print(len(identified_deadpins))
     PinMatcher.gen_csv(master_list=identified_deadpins, csvpath="DeadPins.csv")   
              
     return identified_deadpins

@@ -75,32 +75,42 @@ def match_csv_to_rpt():
     
     A_J1, B_J1, A_J2, B_J2 = [],[],[],[]
     all_comet_lists = [A_J1, B_J1, A_J2, B_J2]
+    master_list = []
     
     for line in cometdcb_list:   # remember each line is a tuple with 4 columns
-        if line[0][6] == "A":
+        
+        if line[0][6] == "A":   # test if A
             if line[0][9] == "1":
                 A_J1.append(line)
-            else:
+            if line[0][9] == "2":
                 A_J2.append(line)
                 
-        if line[0][6] == "B":
+        elif line[0][6] == "B":   # test if B
             if line[0][9] == "1":
                 B_J1.append(line)
-            else:
+            if line[0][9] == "2":
                 B_J2.append(line)
-    
-    master_list = []
-    for cometlist in all_comet_lists:  # now match pin numbers on one list to the other
-        for line in cometlist:  
-            # look inside the firmware list to find the matching pin
-            for pin_tuple in firmware_list:
-                if line[0][15:] == pin_tuple[1]:
-                    master_list.append(line+pin_tuple)
                 
+        else:   # if not A or B, something terrible happened
+            print("Error:",line[0],"does not match",line[0][6],line[0][9])
+    
+
+    for cometlist in all_comet_lists:  # now match pin numbers on one list to the other
+        for index, line in enumerate(cometlist):  
+            # look inside the firmware list to find the matching pin
+            found_pin = False  # keep track to see if we've found it
+            for pin_tuple in firmware_list:
+                if line[0][15:] == pin_tuple[1]:  # match pin numbers
+                    master_list.append(line+pin_tuple)
+                    found_pin = True  # announce we found it
+            
+            if found_pin == False:  # if never found, report as unassigned
+                master_list.append(line+("unnassigned","unnassigned"))
+                    
     return master_list
 
 def gen_csv(master_list=match_csv_to_rpt(), csvpath="MatchedPins.csv"):
-    
+
     with open(csvpath, 'w', newline='') as f:  # create csv file
         writer = csv.writer(f, quoting=csv.QUOTE_ALL)  # initialize writer
         writer.writerow(["COMET FPGA pin","Pathfinder COMET connector", "DCB data GBTx pin"
