@@ -105,7 +105,7 @@ def match_csv_to_rpt():
                     found_pin = True  # announce we found it
             
             if found_pin == False:  # if never found, report as unassigned
-                master_list.append(line+("unnassigned","unnassigned"))
+                master_list.append(line+("unassigned","unassigned"))
                     
     return master_list
 
