@@ -13,7 +13,6 @@ MatchedPins.csv does.
 """
 
 import PinMatcher  # import other script we wrote
-import csv
 
 def pull_deadpins(filepath="resources/DeadPins.txt"):
     
@@ -23,20 +22,20 @@ def pull_deadpins(filepath="resources/DeadPins.txt"):
     return raw_data
 
 
-def identify_deadpins():
+def identify_deadpins():  # matches deadpins.txt to matchedpins.csv
     identified_deadpins = []
     deadpins_list = pull_deadpins()  # pull in our dead pin list
     master_list = PinMatcher.match_csv_to_rpt()  # pull in our reference
     
+      # search for each dead pin inside reference
     for line in deadpins_list:
         for reference in master_list:
             if line[:19].strip() == reference[0].strip():  
               # [:19] for first column, [0] for first column
                 identified_deadpins.append(reference)  # reference is dead 
     
-    print(len(identified_deadpins))
     PinMatcher.gen_csv(master_list=identified_deadpins, csvpath="DeadPins.csv")   
-             
+      # generate csv      
     return identified_deadpins
 
     
